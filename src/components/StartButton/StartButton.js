@@ -1,7 +1,9 @@
 import React from 'react';
 
+import classes from './StartButton.module.css';
+
 const StartButton = () => (
-    <div>StartButton</div>
+    <button className={classes.StartButton}>Start Game</button>
 );
 
 export default StartButton;
