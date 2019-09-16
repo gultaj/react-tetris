@@ -1,0 +1,39 @@
+:root {
+    --opacity: .8;
+    --color-L: rgba(251 186 46 / calc(var(--opacity)));
+}
+
+.Cell {
+    width: auto;
+    color: red;
+    border: 0px solid;
+}
+
+.Cell__I {
+    background-color: rgba(80, 227, 230, .8);
+    /* border-bottom-:  */
+}
+
+.Cell__J {
+    background-color: rgba(36, 95, 223, .8);
+}
+
+.Cell__L {
+    background-color: var(--color-L);
+}
+
+.Cell__O {
+    background-color: rgba(179, 223, 36, .8);
+}
+
+.Cell__S {
+    background-color: rgba(48, 211, 56, .8);
+}
+
+.Cell__T {
+    background-color: rgba(132, 61, 198, .8);
+}
+
+.Cell__Z {
+    background-color: rgba(227, 78, 78, .8);
+}
