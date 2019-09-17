@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import classes from './Tetris.module.css';
-import { createStage } from  'helpers/game';
+
+import { useStage } from 'hooks/useStage';
+import { usePlayer } from 'hooks/usePlayer';
 
 import Stage from 'components/Stage/Stage';
 import Display from 'components/Display/Display';
@@ -12,10 +14,10 @@ const Tetris = () => {
     return (
         <div className={classes.TetrisWrapper}>
             <div className={classes.Tetris}>
-                <Stage stage={createStage()} />
+                <Stage stage={[]} />
                 <aside className={classes.TetrisAside}>
                     <div>
-                        <Display title="Score" />
+                        <Display title="Score" gameOver/>
                         <Display title="Rows" />
                         <Display title="Level" />
                     </div>
