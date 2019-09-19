@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 
 import { randomTetromino, TETROMINOS } from 'helpers/tetrominos';
-import { STAGE_WIDTH } from 'helpers/game';
+import { STAGE_WIDTH, checkCollision } from 'helpers/game';
 
 export const usePlayer = () => {
     const [player, setPlayer] = useState({
@@ -9,6 +9,31 @@ export const usePlayer = () => {
         tetromino: TETROMINOS[0].shape,
         collided: false
     });
+
+    const rotate = (matrix, dir) => {
+        const rotatedTetro = matrix.map((_, i) => matrix.map(col => col[i]));
+        if (dir > 0) {
+            return rotatedTetro.map(row => row.reverse());
+        }
+        return rotatedTetro.reverse();
+    }
+
+    const rotatePlayer = (stage, dir) => {
+        let clonedPlayer = {...player};
+        clonedPlayer.tetromino = rotate(clonedPlayer.tetromino, dir);
+
+        let offset = 1;
+        while (checkCollision(clonedPlayer, stage, {x: 0, y: 0})) {
+            clonedPlayer.position.x += offset;
+            offset = -(offset + (offset > 0 ? 1 : -1));
+            if (offset > clonedPlayer.tetromino[0].length) {
+                clonedPlayer = {...player};
+                return;
+            }
+        }
+
+        setPlayer(clonedPlayer);
+    };
 
     const updatePlayerPos = ({ x, y, collided = false}) => {
         setPlayer(prev => ({
@@ -32,5 +57,5 @@ export const usePlayer = () => {
         })
     }, []);
 
-    return [player, updatePlayerPos, resetPlayer];
+    return [player, updatePlayerPos, resetPlayer, rotatePlayer];
 };

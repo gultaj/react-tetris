@@ -15,7 +15,7 @@ const Tetris = () => {
     const [dropTime, setDropTime] = useState(null);
     const [gameOver, setGameOver] = useState(false);
 
-    const [player, updatePlayerPos, resetPlayer] = usePlayer();
+    const [player, updatePlayerPos, resetPlayer, rotatePlayer] = usePlayer();
     const [stage, setStage] = useStage(player, resetPlayer);
 
     const movePlayer = dir => {
@@ -45,13 +45,15 @@ const Tetris = () => {
     const move = ({ keyCode }) => {
         if(!gameOver) {
             switch (keyCode) {
+                case 32: dropPlayer();
+                    break;
                 case 37: movePlayer(-1);                    
+                    break;
+                case 38: rotatePlayer(stage, 1);
                     break;
                 case 39: movePlayer(1);
                     break;
-                case 40: dropPlayer();
-                    break;
-                default:
+                case 40: rotatePlayer(stage, -1);
                     break;
             }
         }
@@ -64,7 +66,7 @@ const Tetris = () => {
                 <aside className={classes.TetrisAside}>
                     { gameOver ? 
                         (<Display title="Game Over" gameOver={gameOver} />
-                    ) :(
+                    ) : (
                         <div>
                             <Display title="Score"/>
                             <Display title="Rows" />
