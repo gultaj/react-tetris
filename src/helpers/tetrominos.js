@@ -62,7 +62,7 @@ export const TETROMINOS = {
 };
 
 export const randomTetromino = () => {
-    const tetrominos = Object.keys(TETROMINOS).filter(key => key != '0');
+    const tetrominos = Object.keys(TETROMINOS).filter(key => key !== '0');
     const randKey = tetrominos[Math.floor(Math.random() * tetrominos.length)];
     return TETROMINOS[randKey];
 }

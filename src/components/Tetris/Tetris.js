@@ -5,7 +5,7 @@ import classes from './Tetris.module.css';
 import { useStage } from 'hooks/useStage';
 import { usePlayer } from 'hooks/usePlayer';
 
-import { createStage } from 'helpers/game';
+import { createStage, checkCollision } from 'helpers/game';
 
 import Stage from 'components/Stage/Stage';
 import Display from 'components/Display/Display';
@@ -19,16 +19,25 @@ const Tetris = () => {
     const [stage, setStage] = useStage(player, resetPlayer);
 
     const movePlayer = dir => {
-        updatePlayerPos({ x: dir, y: 0 });
+        const newPos = {x: dir, y: 0};
+        if (!checkCollision(player, stage, newPos)) updatePlayerPos(newPos);  
     };
     const startGame = () => {
-        console.log('start');
         setStage(createStage());
         resetPlayer();
-        // setGameOver(false);
+        setGameOver(false);
     };
     const drop = () => {
-        updatePlayerPos({ x: 0, y: 1, collided: false });
+        const newPos = {x: 0, y: 1};
+        if(!checkCollision(player, stage, newPos)) {
+            updatePlayerPos(newPos);
+        } else {
+            if (player.position.y < 1) {
+                setGameOver(true);
+                setDropTime(null);
+            }
+            updatePlayerPos({x: 0, y: 0, collided: true});
+        }
     };
     const dropPlayer = () => {
         drop();

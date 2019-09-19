@@ -5,12 +5,12 @@ import { STAGE_WIDTH } from 'helpers/game';
 
 export const usePlayer = () => {
     const [player, setPlayer] = useState({
-        position: { x: STAGE_WIDTH / 2 - 2, y: 0 },
+        position: { x: 0, y: 0 },
         tetromino: TETROMINOS[0].shape,
         collided: false
     });
 
-    const updatePlayerPos = ({ x, y, collided}) => {
+    const updatePlayerPos = ({ x, y, collided = false}) => {
         setPlayer(prev => ({
             ...prev,
             position: {
@@ -21,7 +21,7 @@ export const usePlayer = () => {
         }));
     };
 
-    const resetPlayer = /*useCallback(*/() => {
+    const resetPlayer = useCallback(() => {
         setPlayer({
             position: {
                 x: STAGE_WIDTH / 2 - 2,
@@ -30,7 +30,7 @@ export const usePlayer = () => {
             tetromino: randomTetromino().shape,
             collided: false
         })
-    }//, []);
+    }, []);
 
     return [player, updatePlayerPos, resetPlayer];
 };
