@@ -2,8 +2,8 @@ import React from 'react';
 
 import classes from './StartButton.module.css';
 
-const StartButton = () => (
-    <button className={classes.StartButton}>Start Game</button>
+const StartButton = ({ callback }) => (
+    <button className={classes.StartButton} onClick={callback}>Start Game</button>
 );
 
 export default StartButton;
