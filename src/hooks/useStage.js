@@ -9,9 +9,13 @@ export const useStage = (player, resetPlayer) => {
     useEffect(() => {
 
         const sweepRows = newStage => {
-            const sweepedStage = newStage.filter(row => row.some(cell => cell[0] === 0));
-            setRowsCleared(newStage.length - sweepedStage.length);
-            sweepedStage.unshift(new Array(rowsCleared).fill(new Array(newStage[0].length).fill([0, 'clear'])));
+            let sweepedStage = newStage.filter(row => row.some(cell => cell[0] === 0));
+            const rows = newStage.length - sweepedStage.length;
+            if (rows > 0) {
+                const addRows = new Array(rows).fill(new Array(newStage[0].length).fill([0, 'clear']));
+                sweepedStage = addRows.concat(sweepedStage);
+            }
+            setRowsCleared(prev => prev + rows);
             return sweepedStage;
         }
 
@@ -37,5 +41,5 @@ export const useStage = (player, resetPlayer) => {
         setStage(prev => updateStage(prev));
     }, [player, resetPlayer]);
 
-    return [stage, setStage];
+    return [stage, setStage, rowsCleared];
 }

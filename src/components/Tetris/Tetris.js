@@ -16,7 +16,7 @@ const Tetris = () => {
     const [gameOver, setGameOver] = useState(false);
 
     const [player, updatePlayerPos, resetPlayer, rotatePlayer] = usePlayer();
-    const [stage, setStage] = useStage(player, resetPlayer);
+    const [stage, setStage, clearedRows] = useStage(player, resetPlayer);
 
     const movePlayer = dir => {
         const newPos = {x: dir, y: 0};
@@ -68,8 +68,8 @@ const Tetris = () => {
                         (<Display title="Game Over" gameOver={gameOver} />
                     ) : (
                         <div>
-                            <Display title="Score"/>
-                            <Display title="Rows" />
+                            <Display title={"Score: "} />
+                            <Display title={"Rows: " + clearedRows} />
                             <Display title="Level" />
                         </div>
                     )}
