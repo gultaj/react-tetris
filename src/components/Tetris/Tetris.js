@@ -4,6 +4,7 @@ import classes from './Tetris.module.css';
 
 import { useStage } from 'hooks/useStage';
 import { usePlayer } from 'hooks/usePlayer';
+import { useInterval } from 'hooks/useInterval';
 
 import { createStage, checkCollision } from 'helpers/game';
 
@@ -26,6 +27,7 @@ const Tetris = () => {
         setStage(createStage());
         resetPlayer();
         setGameOver(false);
+        setDropTime(1000);
     };
     const drop = () => {
         const newPos = {x: 0, y: 1};
@@ -58,6 +60,8 @@ const Tetris = () => {
             }
         }
     };
+
+    useInterval(() => drop(), dropTime);
 
     return (
         <div className={classes.TetrisWrapper} role="button" tabIndex="0" onKeyDown={e => move(e)}>
