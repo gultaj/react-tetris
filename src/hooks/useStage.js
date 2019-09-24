@@ -4,10 +4,10 @@ import { createStage } from 'helpers/game';
 
 export const useStage = (player, resetPlayer) => {
     const [stage, setStage] = useState(createStage());
-    const [rowsCleared, setRowsCleared] = useState(0);
+    const [clearedRows, setRowsCleared] = useState(0);
     
     useEffect(() => {
-
+        setRowsCleared(0);
         const sweepRows = newStage => {
             let sweepedStage = newStage.filter(row => row.some(cell => cell[0] === 0));
             const rows = newStage.length - sweepedStage.length;
@@ -15,7 +15,7 @@ export const useStage = (player, resetPlayer) => {
                 const addRows = new Array(rows).fill(new Array(newStage[0].length).fill([0, 'clear']));
                 sweepedStage = addRows.concat(sweepedStage);
             }
-            setRowsCleared(prev => prev + rows);
+            setRowsCleared(rows);
             return sweepedStage;
         }
 
@@ -41,5 +41,5 @@ export const useStage = (player, resetPlayer) => {
         setStage(prev => updateStage(prev));
     }, [player, resetPlayer]);
 
-    return [stage, setStage, rowsCleared];
+    return [stage, setStage, clearedRows];
 }
